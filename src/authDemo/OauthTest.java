@@ -2,14 +2,13 @@ package authDemo;
 
 
 import io.restassured.path.json.JsonPath;
+import pojo.API;
+import pojo.GetCourse;
 
 import static io.restassured.RestAssured.*;
 
-import java.util.concurrent.TimeUnit;
+import io.restassured.parsing.Parser;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class OauthTest {
 
@@ -17,7 +16,7 @@ public class OauthTest {
 
 		
 		
-		System.setProperty("webdriver.chrome.driver", "D:\\Selenium Workspace\\RestAssuredDemo\\chromedriver.exe");
+		/*System.setProperty("webdriver.chrome.driver", "D:\\Selenium Workspace\\RestAssuredDemo\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -25,18 +24,18 @@ public class OauthTest {
 		driver.findElement(By.xpath("//*[@id=\"identifierId\"]")).sendKeys("krishnakomal2@gmail.com");
 		driver.findElement(By.xpath("//*[@id=\"identifierNext\"]/div/button/div[2]")).click();
 		driver.findElement(By.xpath("//*[@id=\"password\"]/div[1]/div/div[1]/input")).sendKeys("xxxxx");
-		driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/div/button/div[2]")).click();
+		driver.findElement(By.xpath("//*[@id=\"passwordNext\"]/div/button/div[2]")).click();*/
 		
 		
 		//Capturing the url
-		String url = "https://rahulshettyacademy.com/getCourse.php?code=4%2F0AY0e-g6Nzm1po3wBROkIO5ybNG_Mu9hiIiQMVSw95kXPmlb7_bgChc7djo4VH2EuvV6vPg&scope=email+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=0&prompt=none#";
+		String url = "https://rahulshettyacademy.com/getCourse.php?code=4%2F0AY0e-g6s4LY1v0R9MWZ6GyoCKThsLGwKS8GYxmhH8O3gK3cKd_zoGMPJTczWCLKNrRaZfw&scope=email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt=none#";
 		String code = url.split("code=")[1].split("&scope")[0];
 		
 		
 		
 		//Generating access token response - POST
 		//By default rest assured will convert the special characters to numerical value.
-		//Since code has numerical values in it -  we have to explicitly mention it to not convert special characters
+		//Since code has numerical values in it -  we have to explicitly mention it to not convert special characters - urlEncodingEnabled(false)
 		String accessTokenResponse = given()
 										.urlEncodingEnabled(false)
 										.queryParam("code", code)
@@ -54,14 +53,32 @@ public class OauthTest {
 		
 		
 		//Get Request
-		String response = given()
+		GetCourse getCourse = given()
 							.queryParam("access_token", accessToken)
+							.expect()
+							.defaultParser(Parser.JSON)
 							.when()
-							.log().all()
 							.get("https://rahulshettyacademy.com/getCourse.php")
-							.asString();
+							.as(GetCourse.class);
 		
-		System.out.println(response);
+		
+		
+		System.out.println(getCourse.getLinkedIn());
+		System.out.println(getCourse.getInstructor());
+		System.out.println(getCourse.getCourses().getApi().get(1).getCourseTitle());
+		
+		for (int i=0; i<getCourse.getCourses().getApi().size(); i++) {
+			if (getCourse.getCourses().getApi().get(i).getCourseTitle().equalsIgnoreCase("SoapUI Webservices testing")) {
+				System.out.println(getCourse.getCourses().getApi().get(i).getPrice());
+				break;
+			}
+		}
+		
+		for (int i=0; i<getCourse.getCourses().getWebAutomation().size(); i++) {
+			System.out.println(getCourse.getCourses().getWebAutomation().get(i).getCourseTitle());
+		}
+		
+		
 		
 
 	}

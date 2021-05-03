@@ -16,7 +16,7 @@ public class JiraTest {
 		given().header("Content-Type", "application/json").body("{ \r\n"
 				+ "    \"username\": \"komal3091\", \r\n"
 				+ "\r\n"
-				+ "    \"password\": \"December@011995\" \r\n"
+				+ "    \"password\": \"****\" \r\n"
 				+ "\r\n"
 				+ "}")
 		.log().all().filter(session).when().post("/rest/auth/1/session").then().extract().response().asString();

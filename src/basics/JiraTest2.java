@@ -27,7 +27,7 @@ public class JiraTest2 {
 			.body("{ \r\n"
 					+ "    \"username\": \"komal3091\", \r\n"
 					+ "\r\n"
-					+ "    \"password\": \"December@011995\" \r\n"
+					+ "    \"password\": \"******\" \r\n"
 					+ "\r\n"
 					+ "}")
 			.log().all()

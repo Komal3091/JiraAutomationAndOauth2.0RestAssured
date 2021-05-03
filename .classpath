@@ -34,5 +34,9 @@
 	<classpathentry kind="lib" path="D:/jars/selenium-java-3.141.59/libs/guava-25.0-jre.jar"/>
 	<classpathentry kind="lib" path="D:/jars/selenium-java-3.141.59/libs/okhttp-3.11.0.jar"/>
 	<classpathentry kind="lib" path="D:/jars/selenium-java-3.141.59/libs/okio-1.14.0.jar"/>
+	<classpathentry kind="lib" path="D:/jars/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="D:/jars/jackson-annotations-2.12.3.jar"/>
+	<classpathentry kind="lib" path="D:/jars/jackson-core-2.12.3.jar"/>
+	<classpathentry kind="lib" path="D:/jars/jackson-databind-2.12.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
